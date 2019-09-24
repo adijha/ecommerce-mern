@@ -17,7 +17,9 @@ const Insta = require('instamojo-nodejs');
 const url = require('url');
 
 // /api/bid/pay
-router.post('/pay', (req, res) => {
+router.post('/pay', (req, res) =>
+{
+  console.log("/pay post trigger")
   const body = JSON.parse(req.body);
   temp1 = body;
 
