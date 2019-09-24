@@ -17,10 +17,9 @@ const Insta = require('instamojo-nodejs');
 const url = require('url');
 
 // /api/bid/pay
-router.post('/pay', (req, res) =>
-{
-  console.log("/pay post trigger")
+router.post('/pay', (req, res) => {
   const body = JSON.parse(req.body);
+  console.log('/pay body', body);
   temp1 = body;
 
   Insta.setKeys('test_c496eefc2cceece396905f07440', 'test_b7781fba1a5e484e80cde59e36b');
@@ -44,7 +43,9 @@ router.post('/pay', (req, res) =>
       console.log(error);
     } else {
       const responseData = JSON.parse(response);
+      console.log('/pay 46', responseData);
       const redirectUrl = responseData.payment_request.longurl;
+      console.log('/pay 48', redirectUrl);
       res.send(redirectUrl);
     }
   });
@@ -55,7 +56,9 @@ router.post('/pay', (req, res) =>
  * @desc Call back url for instamojo
  * @access public
  */
-router.get('/callback/', (req, res) => {
+router.get('/callback/', (req, res) =>
+{
+  console.log('/callback 61 trigger!!!');
   let url_parts = url.parse(req.url, true),
     responseData = url_parts.query;
 
@@ -63,7 +66,6 @@ router.get('/callback/', (req, res) => {
     temp2 = responseData;
     const order = { ...temp1, ...temp2 };
 
-    
     // const newOrder = new Order({
     //   data: order
     // });
@@ -74,7 +76,6 @@ router.get('/callback/', (req, res) => {
     //     res.send('new user created');
     //   }
     // });
-
 
     // console.log('--order->', order);
     return res.redirect('http://157.245.101.109/payment-complete');
